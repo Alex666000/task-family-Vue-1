@@ -197,7 +197,6 @@ export default {
       if (!this.formUserIsValidate()) {
         isValid = false
       }
-
       this.children.forEach((child, index) => {
         if (!this.childFormIsValid(index)) {
           isValid = false
