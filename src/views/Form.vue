@@ -212,7 +212,7 @@ export default {
           query: {
             parentName: this.name,
             parentAge: this.age,
-            children: JSON.stringify(this.children) // Преобразовываем детей в строку JSON
+            children: JSON.stringify(this.children)
           }
         })
       }
