@@ -24,6 +24,10 @@ module.exports = {
     'no-alert': 'error',
     'no-mixed-operators': 'off',
     'vue/no-unused-vars': 'warn',
+    'padded-blocks': 'warn',
+    'no-self-compare': 'off',
+    'no-constant-condition': 'warn',
+    'no-empty': 'warn',
     'quote-props': 'off',
     'indent': 'off',
 

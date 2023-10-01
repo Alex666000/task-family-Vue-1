@@ -2,7 +2,7 @@
   <div class="container">
     <form class="card" @submit.prevent="submitHandler">
       <h1>Персональные данные</h1>
-      <!-- Блок для Родителя-->
+      <!-- Блок для Родителя____!-->
       <div class="form-control" :class="{ userNameInput: errors.userName }">
         <label for="name">Имя</label>
         <input
@@ -24,6 +24,7 @@
         >
         <small v-if="errors.userAge">{{ errors.userAge }}</small>
       </div>
+
       <hr>
       <button type="button" class="btn primary" @click="addChild" :disabled="isAddChildButtonDisabled">+ Добавить ребенка</button>
       <hr>
@@ -61,6 +62,9 @@
 
 <script>
 export default {
+  created () {
+    this.initChildErrors()
+  },
   data () {
     return {
       title: 'Персональные данные',
@@ -75,6 +79,7 @@ export default {
         childName: '',
         childAge: '',
       },
+      childErrors: [], // Массив для хранения ошибок для каждого ребенка
     }
   },
   computed: {
@@ -83,21 +88,46 @@ export default {
     },
   },
   methods: {
+    initChildErrors () {
+      for (let i = 0; i < this.maxChildren; i++) {
+        this.childErrors.push({
+          childName: '',
+          childAge: '',
+        })
+      }
+    },
     addChild () {
+      // Проверяем валидность данных родителя
+      if (!this.formUserIsValidate()) {
+        // Если есть ошибки в данных родителя, выходим из функции
+        return
+      }
+
       if (this.children.length < this.maxChildren) {
         // Создаем нового ребенка только если не достигнуто максимальное количество
         this.children.push({
           childName: '',
           childAge: 0,
         })
-
+// Очищаем поля пользователя при добавлениии ребенка
         this.errors.userName = ''
         this.errors.userAge = ''
+
+        // Сбрасываем ошибки для нового ребенка
+        this.childErrors.push({
+          childName: '',
+          childAge: '',
+        })
+
+        // При добавлении следующего ребенка зачищаем предыд состояния:
       }
     },
     removeChild (index) {
       // Используем метод splice для удаления ребенка из массива по индексу
       this.children.splice(index, 1)
+
+      // Удаляем ошибки для удаленного ребенка
+      this.childErrors.splice(index, 1)
     },
     childFormIsValid (index) {
       let isValid = true
@@ -136,19 +166,18 @@ export default {
 
       if (
           this.name.length === 0 ||
-          firstChar !== firstChar.toUpperCase() || // Проверка первой заглавной буквы
-          restOfName !== restOfName.toLowerCase() || // Проверка остальных маленьких букв
+          firstChar !== firstChar.toUpperCase() ||
+          restOfName !== restOfName.toLowerCase() ||
           this.name.length > 15
       ) {
-        this.errors.userName = 'Введите имя корректно!'
+        this.errors.userName = 'Заполните Имя'
         isValid = false
       } else {
         this.errors.userName = ''
       }
 
       if (this.age <= 0 || this.age > 99 || !Number.isInteger(this.age)) {
-        this.errors.userAge =
-            'Введите корректный возраст!'
+        this.errors.userAge = 'Заполните возраст'
         isValid = false
       } else {
         this.errors.userAge = ''
