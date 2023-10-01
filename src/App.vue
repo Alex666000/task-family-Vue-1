@@ -2,7 +2,7 @@
   <div class="container">
     <form class="card" @submit.prevent="submitHandler">
       <h1>Персональные данные</h1>
-      <!-- Блок для Родителя____!-->
+      <!-- Блок для Родителя -->
       <div class="form-control" :class="{ userNameInput: errors.userName }">
         <label for="name">Имя</label>
         <input
@@ -29,9 +29,9 @@
       <button type="button" class="btn primary" @click="addChild" :disabled="isAddChildButtonDisabled">+ Добавить ребенка</button>
       <hr>
 
-      <!-- Блок для добавления детей-->
+      <!-- Блок для добавления детей -->
       <div v-for="(child, index) in children" :key="index">
-        <div class="form-control" :class="{ childNameInput: errors.childName }">
+        <div class="form-control" :class="{ childNameInput: childErrors[index].childName }">
           <label :for="'childName' + index">Имя</label>
           <input
               :type="'text'"
@@ -39,9 +39,9 @@
               :placeholder="'Имя ' + (index + 1)"
               v-model="child.childName"
           >
-          <small v-if="errors.childName">{{ errors.childName }}</small>
+          <small v-if="childErrors[index].childName">{{ childErrors[index].childName }}</small>
         </div>
-        <div class="form-control" :class="{ childAgeInput: errors.childAge }">
+        <div class="form-control" :class="{ childAgeInput: childErrors[index].childAge }">
           <label :for="'childAge' + index">Возраст</label>
           <input
               :type="'number'"
@@ -50,7 +50,7 @@
               max="99"
               v-model.number="child.childAge"
           >
-          <small v-if="errors.childAge">{{ errors.childAge }}</small>
+          <small v-if="childErrors[index].childAge">{{ childErrors[index].childAge }}</small>
         </div>
         <button type="button" class="btn primary" @click="removeChild(index)">Удалить</button>
       </div>
@@ -70,8 +70,9 @@ export default {
       title: 'Персональные данные',
       name: '',
       age: 0,
-      isChildValid: false, // Флаг валидности данных о ребенке
-      maxChildren: 5, // Максимальное количество детей
+      isChildValid: false,
+      hasInvalidChild: false,
+      maxChildren: 5,
       children: [],
       errors: {
         userName: '',
@@ -97,36 +98,34 @@ export default {
       }
     },
     addChild () {
-      // Проверяем валидность данных родителя
       if (!this.formUserIsValidate()) {
-        // Если есть ошибки в данных родителя, выходим из функции
+        return
+      }
+
+      const currentIndex = this.children.length
+
+      if (
+          this.childErrors[currentIndex].childName ||
+          this.childErrors[currentIndex].childAge
+      ) {
         return
       }
 
       if (this.children.length < this.maxChildren) {
-        // Создаем нового ребенка только если не достигнуто максимальное количество
         this.children.push({
           childName: '',
           childAge: 0,
         })
-// Очищаем поля пользователя при добавлениии ребенка
         this.errors.userName = ''
         this.errors.userAge = ''
-
-        // Сбрасываем ошибки для нового ребенка
         this.childErrors.push({
           childName: '',
           childAge: '',
         })
-
-        // При добавлении следующего ребенка зачищаем предыд состояния:
       }
     },
     removeChild (index) {
-      // Используем метод splice для удаления ребенка из массива по индексу
       this.children.splice(index, 1)
-
-      // Удаляем ошибки для удаленного ребенка
       this.childErrors.splice(index, 1)
     },
     childFormIsValid (index) {
@@ -136,25 +135,23 @@ export default {
       const firstChar = child.childName.charAt(0)
       const restOfName = child.childName.slice(1)
 
-      // Проверка имени ребенка
       if (
           !child.childName ||
-          firstChar !== firstChar.toUpperCase() || // Проверка первой заглавной буквы
-          restOfName !== restOfName.toLowerCase() || // Проверка остальных маленьких букв
+          firstChar !== firstChar.toUpperCase() ||
+          restOfName !== restOfName.toLowerCase() ||
           child.childName.length > 15
       ) {
-        this.errors.childName = 'Введите имя ребенка корректно!'
+        this.childErrors[index].childName = 'Введите имя ребенка корректно!'
         isValid = false
       } else {
-        this.errors.childName = ''
+        this.childErrors[index].childName = ''
       }
 
-      // Проверка возраста ребенка
       if (!child.childAge || child.childAge <= 0 || child.childAge > 99 || !Number.isInteger(child.childAge)) {
-        this.errors.childAge = 'Введите корректный возраст ребенка!'
+        this.childErrors[index].childAge = 'Введите корректный возраст ребенка!'
         isValid = false
       } else {
-        this.errors.childAge = ''
+        this.childErrors[index].childAge = ''
       }
 
       return isValid
@@ -186,29 +183,23 @@ export default {
       return isValid
     },
     submitHandler () {
-      // общий флаг для formUserIsValidate() и childFormIsValid(index)
       let isValid = true
 
-      // Проверка данных о родителе - отрицательный кейс сначала проверям...
       if (!this.formUserIsValidate()) {
         isValid = false
       }
 
-      // Проверка данных о детях - отрицательный кейс сначала проверям...
       this.children.forEach((child, index) => {
         if (!this.childFormIsValid(index)) {
-          // устаавливаем 2 флага в false
           isValid = false
           this.isChildValid = false
         }
       })
 
       if (isValid) {
-        // Все данные корректны, можно отправлять форму
         console.log('Name:', this.name)
         console.log('Age:', this.age)
 
-        // Вывести данные о детях, только если флаг валидности данных о ребенке true
         if (!this.isChildValid) {
           this.children.forEach((child, index) => {
             console.log(`Child ${index + 1} Name:`, child.childName)
