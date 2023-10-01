@@ -66,6 +66,7 @@
 
 <script>
 export default {
+  name: 'form',
   created () {
     this.initChildErrors()
   },
@@ -205,17 +206,15 @@ export default {
       })
 
       if (isValid) {
-        console.log('Name:', this.name)
-        console.log('Age:', this.age)
-
-        if (!this.isChildValid) {
-          this.children.forEach((child, index) => {
-            console.log(`Child ${index + 1} Name:`, child.childName)
-            console.log(`Child ${index + 1} Age:`, child.childAge)
-          })
-        } else {
-          console.log('Заполните поля формы правильно!')
-        }
+        // Выполнить перенаправление на страницу Preview только после успешной валидации
+        this.$router.push({
+          name: 'preview',
+          query: {
+            parentName: this.name,
+            parentAge: this.age,
+            children: JSON.stringify(this.children) // Преобразовываем детей в строку JSON
+          }
+        })
       }
     },
   },
