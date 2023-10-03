@@ -1,35 +1,26 @@
 <template>
-  <!--  Header-->
-
-  <!--Главный блок-->
   <main class="personal-data">
     <div class="container">
       <h2 class="title personal-data__title">Персональные данные</h2>
       <form class="form" @submit.prevent="submitHandler">
-        <!-- Блок для Родителя -->
-        <!-- Имя-->
-        <div class="form-control" :class="{ userNameInput: errors.userName }">
-          <label class="input-label" for="name">Имя</label>
-          <input
-              type="text"
-              id="name"
-              v-model="name"
-              placeholder="Введите имя"
-          >
-          <small v-if="errors.userName">{{ errors.userName }}</small>
-        </div>
-        <!-- Возраст-->
-        <div class="form-control" :class="{ userAgeInput: errors.userAge }">
-          <label class="input-label" for="age">Возраст</label>
-          <input
-              type="number"
-              id="age"
-              max="99"
-              v-model.number="age"
-              placeholder="Введите возраст"
-          >
-          <small v-if="errors.userAge">{{ errors.userAge }}</small>
-        </div>
+        <app-input
+            :type="'text'"
+            :placeholder="'Введите имя'"
+            :error="errors.userName"
+            :label="'Имя'"
+            v-model:value="name"
+        >
+        </app-input>
+        <app-input
+            :type="'number'"
+            :placeholder="'Введите возраст'"
+            :error="errors.userAge"
+            :label="'Возраст'"
+            v-model.number:value="age"
+            max="99"
+        >
+        </app-input>
+
         <div class="children-button">
           <h2 id="title-for-children" class="title personal-data__title">Дети (макс. 5)</h2>
           <button type="button" class="button" @click="addChild" :disabled="isAddChildButtonDisabled">Добавить ребенка</button>
@@ -40,12 +31,13 @@
           <div class="form-control" :class="{ childNameInput: childErrors[index].childName }">
             <label class="input-label" :for="'childName' + index">Имя</label>
             <input
-                :type="'text'"
+                type="text"
                 :id="'childName' + index"
                 v-model="child.childName"
             >
             <small v-if="childErrors[index].childName">{{ childErrors[index].childName }}</small>
           </div>
+
           <div class="form-control" :class="{ childAgeInput: childErrors[index].childAge }">
             <label class="input-label" :for="'childAge' + index">Возраст</label>
             <input
@@ -65,8 +57,11 @@
 </template>
 
 <script>
+import AppInput from '@/components/AppInput'
+
 export default {
   name: 'form',
+  components: {AppInput},
   created () {
     this.initChildErrors()
   },
