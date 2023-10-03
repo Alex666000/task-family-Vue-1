@@ -12,10 +12,6 @@
       </div>
     </div>
   </main>
-  <!--  Footer-->
-  <footer class="footer">
-    <p>all rights reserved</p>
-  </footer>
 </template>
 
 <script>
