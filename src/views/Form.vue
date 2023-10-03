@@ -1,22 +1,6 @@
 <template>
   <!--  Header-->
-  <header class="header">
-    <div class="header__inner">
-      <a class="logo" href="https://alef.im">
-        <img class="logo__img" src="../assets/images/logo.svg" alt="Логотип">
-      </a>
-      <nav class="menu">
-        <ul class="menu__list">
-          <li class="menu__list-item">
-            <router-link class="preview-link" to="/form">Форма</router-link>
-          </li>
-          <li class="menu__list-item">
-            <router-link class="preview-link" to="/preview">Превью</router-link>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+
   <!--Главный блок-->
   <main class="personal-data">
     <div class="container">
@@ -74,15 +58,10 @@
           </div>
           <button type="button" class="remove-button" @click="removeChild(index)">Удалить</button>
         </div>
-
         <button type="submit" class="save-button">Сохранить</button>
       </form>
     </div>
   </main>
-  <!--  Footer-->
-  <footer class="footer">
-    <p>all rights reserved</p>
-  </footer>
 </template>
 
 <script>
@@ -242,51 +221,6 @@ export default {
 </script>
 
 <style lang="scss">
-.container {
-  max-width: 917px;
-  padding: 0 10px;
-  margin: 0 auto;
-}
-
-.header__inner {
-  padding-bottom: 45px;
-  padding-top: 22px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  position: relative;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-}
-
-.logo__img {
-  padding: 0 41px 0 41px;
-}
-
-.logo {
-  position: absolute;
-  left: 190px;
-}
-
-.menu__list {
-  display: flex;
-}
-
-.menu__list-item {
-}
-
-.menu__list-item + .menu__list-item {
-  margin-left: 24px;
-}
-
-.preview-link {
-  padding: 7px 0 7px;
-  font-size: 14px;
-  line-height: 24px;
-  word-wrap: break-word;
-}
 
 .personal-data {
   flex: 1 1 auto;
@@ -414,21 +348,6 @@ export default {
   margin-top: 30px;
 }
 
-.footer {
-  width: 100%;
-  min-height: 76px;
-  font-weight: 500;
-  background: #FAFAFA;
-  box-shadow: 0px 1px 0px 0px rgba(17, 17, 17, 0.10);
-}
-
-.footer p {
-  padding: 30px 10px;
-  text-align: center;
-  color: #111111;
-}
-
-//-------------------------------------------------------------------------------
 .form-control small {
   display: block;
   color: #b40b05;

@@ -1,22 +1,5 @@
 <template>
-  <header class="header">
-    <div class="header__inner">
-      <a class="logo" href="https://alef.im">
-        <img class="logo__img" src="../assets/images/logo.svg" alt="Логотип">
-      </a>
-      <nav class="menu">
-        <ul class="menu__list">
-          <li class="menu__list-item">
-            <router-link class="preview-link" to="/form">Форма</router-link>
-          </li>
-          <li class="menu__list-item">
-            <router-link class="preview-link" to="/preview">Превью</router-link>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-  <main class="personal-data">
+    <main class="personal-data">
     <div class="container">
       <h2 class="title personal-data__title">Персональные данные</h2>
       <div class="name-age">{{ parentName || 'Василий' }}, {{ parentAge || 30 }} лет </div>
