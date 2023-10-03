@@ -16,7 +16,7 @@
             :placeholder="'Введите возраст'"
             :error="errors.userAge"
             :label="'Возраст'"
-            v-model.number:value="age"
+            v-model:value="age"
             max="99"
         >
         </app-input>
