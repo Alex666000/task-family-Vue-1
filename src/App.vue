@@ -1,10 +1,5 @@
 <template>
-  <div class="container">
-    <!-- Ссылка "Форма" -->
-    <router-link to="/form">Форма</router-link>
-    <!-- Ссылка "Превью" -->
-    <router-link to="/preview">Превью</router-link>
-    <!-- Рендеринг компонентов для текущего маршрута -->
+  <div class="wrapper">
     <router-view :parentName="parentName" :parentAge="parentAge"></router-view>
   </div>
 </template>

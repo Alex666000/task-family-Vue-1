@@ -18,6 +18,7 @@ module.exports = {
     'vue/no-unused-components': 'warn',
     'no-unused-vars': 'warn',
     'vue/valid-template-root': 'warn',
+    'no-undef': 'warn',
     'no-multiple-empty-lines': 'off',
     'comma-dangle': 'off',
     'object-curly-spacing': 'off',

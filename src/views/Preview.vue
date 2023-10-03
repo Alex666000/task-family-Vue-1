@@ -1,10 +1,38 @@
 <template>
-  <div>
-    <h2>Персональные данные</h2>
-    <div>Родитель: {{ parentName || 'Василий' }}, {{ parentAge || 30 }} лет</div>
-    <p>Дети</p>
-    <div v-for="(child, index) in children" :key="index">Ребенок: {{ child.childName }}, {{ child.childAge }} лет</div>
-  </div>
+  <header class="header">
+    <div class="header__inner">
+      <a class="logo" href="https://alef.im">
+        <img class="logo__img" src="../assets/images/logo.svg" alt="Логотип">
+      </a>
+      <nav class="menu">
+        <ul class="menu__list">
+          <li class="menu__list-item">
+            <router-link class="preview-link" to="/form">Форма</router-link>
+          </li>
+          <li class="menu__list-item">
+            <router-link class="preview-link" to="/preview">Превью</router-link>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="personal-data">
+    <div class="container">
+      <h2 class="title personal-data__title">Персональные данные</h2>
+      <div class="name-age">{{ parentName || 'Василий' }}, {{ parentAge || 30 }} лет </div>
+      <h2 class="child-title personal-data__title">Дети</h2>
+      <div class="children">
+        <div class="child-info" v-for="(child, index) in children" :key="index">
+          <span>{{ child.childName }}, &nbsp; </span>
+          <span>{{ child.childAge }}&nbsp;лет</span>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!--  Footer-->
+  <footer class="footer">
+    <p>all rights reserved</p>
+  </footer>
 </template>
 
 <script>
@@ -35,3 +63,92 @@ export default {
   }
 }
 </script>
+
+
+<style>
+.container {
+  max-width: 917px;
+  padding: 0 10px;
+  margin: 0 auto;
+}
+
+.header__inner {
+  padding-bottom: 45px;
+  padding-top: 22px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.logo__img {
+  padding: 0 41px 0 41px;
+}
+
+.logo {
+  position: absolute;
+  left: 190px;
+}
+
+.menu__list {
+  display: flex;
+}
+
+.menu__list-item {
+}
+
+.menu__list-item + .menu__list-item {
+  margin-left: 24px;
+}
+
+.preview-link {
+  padding: 7px 0 7px;
+  font-size: 14px;
+  line-height: 24px;
+  word-wrap: break-word;
+}
+
+.personal-data {
+  flex: 1 1 auto;
+  color: #111111;
+  font-weight: 600;
+}
+
+.personal-data__title {
+  margin-bottom: 20px;
+  color: #111111;
+  font-size: 16px;
+  font-weight: 550;
+  line-height: 24px;
+  word-wrap: break-word;
+}
+
+.child-title {
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+
+.children {
+  margin-top: 10px;
+  width: max-content;
+
+}
+
+.child-info {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  min-height: 44px;
+  border-radius: 5px;
+  background: #F1F1F1;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.child-info:last-child {
+  margin-bottom: 0; /* Убираем маргин у последнего блока */
+  background: #F1F1F1;
+
+}
+</style>
